@@ -1,0 +1,52 @@
+package com.example.demo.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.example.demo.util.DemoEnum;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+public class Demo {
+	
+	@Id
+	@GeneratedValue (strategy = GenerationType.AUTO)
+	private Long demoId;
+	
+	private String demoString;
+	
+	private int demoInt;
+	
+	private boolean isDemo;
+	
+	@Enumerated(EnumType.STRING)
+	private DemoEnum demoEnum;
+	
+	@ManyToMany
+	@JoinTable(name = "demo_test",
+	joinColumns = @JoinColumn(
+			name = "demo_id"),
+	inverseJoinColumns = {@JoinColumn(
+			name = "test_id")})
+	private Set<Test> test = new HashSet<>();
+	
+	@ManyToOne
+	@JoinColumn(name= "example_id")
+	private Example example;
+
+}

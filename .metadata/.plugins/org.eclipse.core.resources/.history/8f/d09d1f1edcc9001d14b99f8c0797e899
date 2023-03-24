@@ -1,0 +1,7 @@
+package com.example.demo.util;
+
+public enum DemoEnum {
+	ONE,
+	TWO,
+	THREE
+}
