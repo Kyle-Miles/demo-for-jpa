@@ -2,8 +2,6 @@ spring.datasource.url=jdbc:mysql://localhost:3306/demo
 spring.datasource.username=demo
 spring.datasource.password=demo
 
-# When you are done creating tables or create them via SQL, change the folling to: 
-# spring.jpa.hibernate.ddl-auto=update
-spring.jpa.hibernate.ddl-auto=create 
+spring.jpa.hibernate.ddl-auto=create
 spring.jpa.show-sql=true
 spring.jpa.hibernate.use-new-id-generator-mappings=false
