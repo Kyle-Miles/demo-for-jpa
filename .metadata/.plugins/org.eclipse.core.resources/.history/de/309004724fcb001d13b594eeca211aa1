@@ -1,0 +1,7 @@
+package com.example.demo.util;
+
+public enum OneEnum {
+	example1,
+	exampleOne,
+	example_one
+}

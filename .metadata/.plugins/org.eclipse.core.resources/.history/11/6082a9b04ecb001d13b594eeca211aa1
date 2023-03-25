@@ -1,0 +1,62 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Main;
+import com.example.demo.repository.DemoRepository;
+
+@Service
+public class DemoServiceImpl implements DemoService{
+	
+	private DemoRepository demoRepository;
+	
+	@Autowired
+	public DemoServiceImpl(DemoRepository demoRepository) {
+		this.demoRepository = demoRepository;
+	}
+
+	@Override
+	public Main saveMain(Main main) {
+		return demoRepository.save(main);
+	}
+
+	@Override
+	public List<Main> getAllMains() {
+		return demoRepository.findAll();
+	}
+
+	@Override
+	public Main getMainById(Long id) {
+		return demoRepository.findById(id).orElseThrow(() -> 
+	    	new ResourceNotFoundException("player", "Id", id));
+	}
+
+	@Override
+	public Main updateMain(Main main, Long id) {
+		Main existingMain = demoRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+		existingMain.setDemoString(main.getDemoString());
+		existingMain.setDemoInt(main.getDemoInt());
+		existingMain.setDemo(main.isDemo());
+		existingMain.setDemoEnum(main.getDemoEnum());
+		existingMain.setExample(main.getExample());
+		existingMain.setTest(main.getTest());
+		
+	    demoRepository.save(existingMain);
+	    return existingMain;
+	}
+
+	@Override
+	public void deleteDemo(Long id) {
+		Main existingMain = demoRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+	    demoRepository.deleteById(id);
+	}
+
+}

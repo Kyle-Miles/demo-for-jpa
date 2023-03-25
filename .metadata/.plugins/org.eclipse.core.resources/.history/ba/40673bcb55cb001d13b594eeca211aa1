@@ -1,0 +1,59 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.example.demo.model.One;
+import com.example.demo.service.OneService;
+
+public class OneController {
+	
+	private OneService demoService;
+	
+	@Autowired
+	private OneController(OneService demoService) {
+		super();
+		this.demoService = demoService;
+	}
+	
+	@PostMapping()
+	public ResponseEntity<One> save(
+			@RequestBody One main) {
+	    return new ResponseEntity<One>(demoService.saveMany(main),HttpStatus.CREATED);
+	}
+	
+	@GetMapping
+	public ResponseEntity <List <One>> getAll() {
+	    return new ResponseEntity<List<One>>(demoService.getAllMany(), HttpStatus.OK);
+	}
+	
+	@GetMapping("{many_id}")
+	public ResponseEntity<One> getById(
+			@PathVariable("many_id") Long id) {
+		return new ResponseEntity<One>(demoService.getManyById(id), HttpStatus.OK);
+	}    
+	
+	@PutMapping("{many_id}")
+	public ResponseEntity<One> update(
+			@PathVariable("many_id") Long id,
+			@RequestBody One many) {
+	    return new ResponseEntity<One>(demoService.updateMany(many, id), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("{many_id}")
+	public ResponseEntity<String> delete(
+			@PathVariable("many_id") Long id) {
+	    demoService.deleteMany(id);
+	    return new ResponseEntity<String>("Demo Deleted...", HttpStatus.OK);
+	}
+
+}

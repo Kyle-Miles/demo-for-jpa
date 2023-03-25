@@ -1,0 +1,19 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import com.example.demo.model.To;
+
+public interface DemoService {
+	
+	public To saveMain(To main);
+	
+	public List <To> getAllMains();
+	
+	public To getMainById(Long id);
+	
+	public To updateMain(To main, Long id);
+	
+	public void deleteDemo(Long id);
+
+}

@@ -1,0 +1,59 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Many;
+import com.example.demo.repository.ManyRepository;
+
+@Service
+public class ManyServiceImpl implements ManyService {
+	
+	private ManyRepository manyRepository;
+	
+	@Autowired
+	public ManyServiceImpl(ManyRepository manyRepository) {
+		this.manyRepository = manyRepository;
+	}
+
+	@Override
+	public Many saveMany(Many many) {
+		return manyRepository.save(many);
+	}
+
+	@Override
+	public List<Many> getAllMany() {
+		return manyRepository.findAll();
+	}
+
+	@Override
+	public Many getManyById(Long id) {
+		return manyRepository.findById(id).orElseThrow(() -> 
+    		new ResourceNotFoundException("demo", "Id", id));
+	}
+
+	@Override
+	public Many updateMany(Many many, Long id) {
+		Many existingMany = manyRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+		existingMany.setManyEnum(many.getManyEnum());
+		
+	    manyRepository.save(existingMany);
+	    
+	    return existingMany;
+	}
+
+	@Override
+	public void deleteMany(Long id) {
+		Many existingMany = manyRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+	    manyRepository.deleteById(id);
+		
+	}
+
+}

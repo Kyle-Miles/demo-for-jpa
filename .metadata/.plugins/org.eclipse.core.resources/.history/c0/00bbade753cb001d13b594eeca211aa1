@@ -1,0 +1,59 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.example.demo.model.Main;
+import com.example.demo.service.ManyService;
+
+public class ManyController {
+	
+	private ManyService demoService;
+	
+	@Autowired
+	private MainController(ManyService demoService) {
+		super();
+		this.demoService = demoService;
+	}
+	
+	@PostMapping()
+	public ResponseEntity<Main> savePlayer(
+			@RequestBody Main main) {
+	    return new ResponseEntity<Main>(demoService.saveMain(main),HttpStatus.CREATED);
+	}
+	
+	@GetMapping
+	public ResponseEntity <List <Main>> getAllMains() {
+	    return new ResponseEntity<List<Main>>(demoService.getAllMains(), HttpStatus.OK);
+	}
+	
+	@GetMapping("{main_id}")
+	public ResponseEntity<Main> getMainById(
+			@PathVariable("main_id") Long id) {
+		return new ResponseEntity<Main>(demoService.getMainById(id), HttpStatus.OK);
+	}    
+	
+	@PutMapping("{main_id}")
+	public ResponseEntity<Main> updateMain(
+			@PathVariable("main_id") Long id,
+			@RequestBody Main main) {
+	    return new ResponseEntity<Main>(demoService.updateMain(main, id), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("{main_id}")
+	public ResponseEntity<String> deleteDemo(
+			@PathVariable("main_id") Long id) {
+	    demoService.deleteDemo(id);
+	    return new ResponseEntity<String>("Demo Deleted...", HttpStatus.OK);
+	}
+
+}

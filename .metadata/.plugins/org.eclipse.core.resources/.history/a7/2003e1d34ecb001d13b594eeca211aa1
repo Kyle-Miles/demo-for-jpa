@@ -1,0 +1,62 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.ManyTo;
+import com.example.demo.repository.DemoRepository;
+
+@Service
+public class DemoServiceImpl implements DemoService{
+	
+	private DemoRepository demoRepository;
+	
+	@Autowired
+	public DemoServiceImpl(DemoRepository demoRepository) {
+		this.demoRepository = demoRepository;
+	}
+
+	@Override
+	public ManyTo saveMain(ManyTo main) {
+		return demoRepository.save(main);
+	}
+
+	@Override
+	public List<ManyTo> getAllMains() {
+		return demoRepository.findAll();
+	}
+
+	@Override
+	public ManyTo getMainById(Long id) {
+		return demoRepository.findById(id).orElseThrow(() -> 
+	    	new ResourceNotFoundException("player", "Id", id));
+	}
+
+	@Override
+	public ManyTo updateMain(ManyTo main, Long id) {
+		ManyTo existingMain = demoRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+		existingMain.setDemoString(main.getDemoString());
+		existingMain.setDemoInt(main.getDemoInt());
+		existingMain.setDemo(main.isDemo());
+		existingMain.setDemoEnum(main.getDemoEnum());
+		existingMain.setExample(main.getExample());
+		existingMain.setTest(main.getTest());
+		
+	    demoRepository.save(existingMain);
+	    return existingMain;
+	}
+
+	@Override
+	public void deleteDemo(Long id) {
+		ManyTo existingMain = demoRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+	    demoRepository.deleteById(id);
+	}
+
+}

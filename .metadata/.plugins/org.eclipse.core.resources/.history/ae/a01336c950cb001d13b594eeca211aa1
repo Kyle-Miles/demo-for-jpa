@@ -1,0 +1,39 @@
+package com.example.demo.model;
+
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.example.demo.util.OneEnum;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+public class One {
+	
+	@Id
+	@GeneratedValue (strategy = GenerationType.AUTO)
+	private Long oneId;
+	
+	private String oneString;
+	
+	private int oneInt;
+	
+	private boolean isOne;
+	
+	@Enumerated(EnumType.STRING)
+	private OneEnum oneEnum;
+	
+	@OneToMany(mappedBy = "one")
+	private Set <Many> many;
+
+}

@@ -1,0 +1,6 @@
+package com.example.demo.util;
+
+public enum MainEnum {
+	DEMO_1,
+	DEMO_2
+}

@@ -1,0 +1,88 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Main;
+import com.example.demo.model.Many;
+import com.example.demo.repository.ManyRepository;
+
+public class ManyServiceImpl implements ManyService {
+	
+private ManyRepository manyRepository;
+	
+	@Autowired
+	public ManyServiceImpl(ManyRepository mainRepository) {
+		this.manyRepository = mainRepository;
+	}
+
+	@Override
+	public Main saveMain(Main main) {
+		return manyRepository.save(main);
+	}
+
+	@Override
+	public List<Main> getAllMains() {
+		return manyRepository.findAll();
+	}
+
+	@Override
+	public Main getMainById(Long id) {
+		return manyRepository.findById(id).orElseThrow(() -> 
+	    	new ResourceNotFoundException("demo", "Id", id));
+	}
+
+	@Override
+	public Main updateMain(Main main, Long id) {
+		Main existingMain = manyRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+		existingMain.setMainString(main.getMainString());
+		existingMain.setMainInt(main.getMainInt());
+		
+	    manyRepository.save(existingMain);
+	    
+	    return existingMain;
+	}
+
+	@Override
+	public void deleteDemo(Long id) {
+		Main existingMain = manyRepository.findById(id).orElseThrow(() ->
+	    new ResourceNotFoundException("demo", "Id", id));
+	    
+	    manyRepository.deleteById(id);
+	}
+
+	@Override
+	public Many saveMany(Many many) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Many> getAllMany() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Many getManyById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Many updateMany(Many many, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteMany(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

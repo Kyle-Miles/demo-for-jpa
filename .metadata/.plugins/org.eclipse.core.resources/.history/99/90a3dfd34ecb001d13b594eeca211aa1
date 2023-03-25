@@ -1,0 +1,19 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import com.example.demo.model.ManyTo;
+
+public interface DemoService {
+	
+	public ManyTo saveMain(ManyTo main);
+	
+	public List <ManyTo> getAllMains();
+	
+	public ManyTo getMainById(Long id);
+	
+	public ManyTo updateMain(ManyTo main, Long id);
+	
+	public void deleteDemo(Long id);
+
+}
